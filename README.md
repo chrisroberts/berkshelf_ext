@@ -26,9 +26,17 @@ it as usual.
 
 ## Current extensions
 
-* Resolution via nested berksfiles
-* Proper berksfile path when loading berksfiles
-* Proper dependency resolution
+* Resolution via nested berksfiles (nested_berksfiles)
+* Proper berksfile path when loading berksfiles (berksfile_loader_context)
+* Proper dependency resolution (dependency_chains)
+
+## Prevent extension loading
+
+You can explicitly define what is allowed or not allowed to load via
+environment variables
+
+* `BERKSHELF_EXT_EXCEPT="nested_berksfiles"`
+* `BERKSHELF_EXT_ONLY="nested_berksfiles,berksfile_loader_context"`
 
 # Info
 * Repository: https://github.com/chrisroberts/berkshelf_ext

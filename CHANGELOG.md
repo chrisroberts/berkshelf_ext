@@ -1,3 +1,6 @@
+## v1.0.4
+* Properly autoload berksfile module in dependency_chains
+
 ## v1.0.2
 * Add `non_recommends_depends` to fix dependency resolution
 * Add `knife_uploader` addon to disable ridley based uploads

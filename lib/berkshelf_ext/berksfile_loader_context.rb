@@ -1,4 +1,4 @@
-module Berkshelf
+module BerkshelfExt
   module BerksfileLoaderContext
     module Berksfile
       def self.included(klass)
@@ -50,4 +50,4 @@ module Berkshelf
   end
 end
 
-Berkshelf::Berksfile.send(:include, Berkshelf::BerksfileLoaderContext::Berksfile)
+Berkshelf::Berksfile.send(:include, BerkshelfExt::BerksfileLoaderContext::Berksfile)

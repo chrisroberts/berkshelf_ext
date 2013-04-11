@@ -46,9 +46,20 @@ Addons are extensions that must be explicitly enabled via environment variable:
 
 * `BERKSHELF_EXT_ADDONS="knife_uploader"`
 
+It is important to note that these addons will generally make use of Chef internals
+to do things.
+
 ### Available addons
 
 * Knife based cookbook uploading (disables Ridley)[4]
+* Faster dependency resolution via faster cached cookbook handling (fast_resolution)
+
+## Load all the things!
+
+If you want to just load everything that is available without explicitly defining
+all the addons, just set the everything env variable:
+
+* `BERKSHELF_EXT_EVERYTHING="true"`
 
 # References
 

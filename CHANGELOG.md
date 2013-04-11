@@ -1,3 +1,7 @@
+## v1.0.8
+* Add environment variable to allow loading all available extensions
+* Add new addon extension fast_resolution to locate and use cached cookbooks faster
+
 ## v1.0.6
 * Add custom resolve to berksfile for dependency_chains to account for reverted changeset
 

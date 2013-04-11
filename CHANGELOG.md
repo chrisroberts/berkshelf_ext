@@ -1,3 +1,6 @@
+## v1.0.6
+* Add custom resolve to berksfile for dependency_chains to account for reverted changeset
+
 ## v1.0.4
 * Properly autoload berksfile module in dependency_chains
 

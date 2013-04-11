@@ -9,3 +9,9 @@ Dir.glob(File.join(File.dirname(__FILE__), '*.rb')).each do |ext_file|
   end
   require ext_file
 end
+
+if(ENV['BERKSHELF_EXT_ADDONS'])
+  ENV['BERKSHELF_EXT_ADDONS'].split(',').each do |addon|
+    require "berkshelf_ext/addons/#{addon.strip}"
+  end
+end

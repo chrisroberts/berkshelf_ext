@@ -11,5 +11,6 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.executables = %w(berks_ext)
   s.add_dependency 'berkshelf', BerkshelfExt::BERKSHELF_CONSTRAINT
+  s.add_dependency 'chef'
   s.files = Dir['**/*']
 end

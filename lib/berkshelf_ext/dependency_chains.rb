@@ -94,3 +94,4 @@ module BerkshelfExt
 end
 
 Berkshelf::Resolver.send(:include, BerkshelfExt::DependencyChains::Resolver)
+Berkshelf::Berksfile.send(:include, BerkshelfExt::DependencyChains::Berksfile)

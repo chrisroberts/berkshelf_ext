@@ -26,9 +26,10 @@ it as usual.
 
 ## Current extensions
 
-* Resolution via nested berksfiles (nested_berksfiles)
-* Proper berksfile path when loading berksfiles (berksfile_loader_context)
-* Proper dependency resolution (dependency_chains)
+* Resolution via nested berksfiles (nested_berksfiles)[1]
+* Proper berksfile path when loading berksfiles (berksfile_loader_context)[2]
+* Proper dependency resolution (dependency_chains)[3]
+* Do not include recommends entries in cookbook dependencies (non_recommends_depends)
 
 ## Prevent extension loading
 
@@ -37,6 +38,23 @@ environment variables
 
 * `BERKSHELF_EXT_EXCEPT="nested_berksfiles"`
 * `BERKSHELF_EXT_ONLY="nested_berksfiles,berksfile_loader_context"`
+
+## Current addons
+
+Addons are extensions that must be explicitly enabled via environment variable:
+
+* `BERKSHELF_EXT_ADDONS="knife_uploader"`
+
+### Available addons
+
+* Knife based cookbook uploading (disables Ridley)[4]
+
+# References
+
+1. https://github.com/RiotGames/berkshelf/pull/304
+2. https://github.com/RiotGames/berkshelf/pull/304
+3. https://github.com/RiotGames/berkshelf/pull/302
+4. https://github.com/RiotGames/berkshelf/pull/291 
 
 # Info
 * Repository: https://github.com/chrisroberts/berkshelf_ext

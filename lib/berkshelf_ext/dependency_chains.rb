@@ -1,5 +1,33 @@
 module BerkshelfExt
   module DependencyChains
+    module Berksfile
+      class << self
+        def included(klass)
+          klass.class_eval do
+            alias_method :non_dependency_chains_sources, :sources
+            alias_method :sources, :dependency_chains_sources
+          end
+        end
+      end
+      def dependency_chains_sources(options = {})
+        l_sources = @sources.collect { |name, source| source }.flatten
+
+        except    = Array(options.fetch(:except, nil)).collect(&:to_sym)
+        only      = Array(options.fetch(:only, nil)).collect(&:to_sym)
+
+        case
+        when !except.empty? && !only.empty?
+          raise Berkshelf::ArgumentError, "Cannot specify both :except and :only"
+        when !except.empty?
+          l_sources.select { |source| (except & source.groups).empty? }
+        when !only.empty?
+          l_sources.select { |source| !(only & source.groups).empty? }
+        else
+          l_sources
+        end
+      end
+    end
+    
     module Resolver
 
       class << self
@@ -48,7 +76,10 @@ module BerkshelfExt
           begin
             solution = Solve.it!(graph, [demand])
           rescue Solve::Errors::NoSolutionError
-            raise Berkshelf::NoSolution.new("Failed to resolve dependencies for: #{demand.join(': ')}")
+             raise Berkshelf::NoSolution.new(
+              "Failed to resolve dependencies for:\n#{demand.join(': ')}\nDependencies: " <<
+              @sources[demand.first].cached_cookbook.dependencies.map{|n,v| "  #{n}: #{v}"}.join("\n")
+            )
           end
         end
         solution = Solve.it!(graph, demands)

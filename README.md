@@ -1,7 +1,6 @@
 # Berkshelf Ext
 
-Berkshelf extensions to add features to berkshelf not
-accepted upstream.
+Berkshelf extensions to add features to berkshelf.
 
 ## Usage
 
@@ -25,6 +24,8 @@ Which will add the extensions to berkshelf, and then initialize
 it as usual.
 
 ## Current extensions
+
+These extensions are auto loaded by default.
 
 * Resolution via nested berksfiles (nested_berksfiles)[1]
 * Proper berksfile path when loading berksfiles (berksfile_loader_context)[2]

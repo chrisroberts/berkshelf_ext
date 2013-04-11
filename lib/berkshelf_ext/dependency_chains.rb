@@ -6,6 +6,8 @@ module BerkshelfExt
           klass.class_eval do
             alias_method :non_dependency_chains_sources, :sources
             alias_method :sources, :dependency_chains_sources
+            alias_method :non_dependency_chains_resolve, :resolve
+            alias_method :resolve, :dependency_chains_resolve
           end
         end
       end
@@ -25,6 +27,10 @@ module BerkshelfExt
         else
           l_sources
         end
+      end
+
+      def dependency_chains_resolve(options={})
+        resolver(options).resolve(options.fetch(:cookbooks, nil))
       end
     end
     

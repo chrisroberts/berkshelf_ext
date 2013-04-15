@@ -40,8 +40,8 @@ class RidleyMocker
     loader.load_cookbooks
     cv = loader.cookbook_version
     cv.send(:generate_manifest)
-    cv.manifest['name'] = "#{cv.name}-#{cv.version}" #.sub!(%r{-[^-]+$}, '')
-    cv.manifest['cookbook_name'] = cv.name
+    cv.manifest['name'] = "#{cv.metadata.name}-#{cv.version}"
+    cv.name = cv.manifest['cookbook_name'] = cv.metadata.name
     cv.freeze_version if upload_options.delete(:freeze)
     Chef::CookbookUploader.new([cv], cookbook.path, upload_options).upload_cookbooks
     @ckbk = cv

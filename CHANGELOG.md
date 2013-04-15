@@ -1,3 +1,7 @@
+## v1.0.10
+* Forcibly set name when uploading via knife
+* Only load sources of specified cookbooks when uploading with `--skip-dependencies`
+
 ## v1.0.8
 * Add environment variable to allow loading all available extensions
 * Add new addon extension fast_resolution to locate and use cached cookbooks faster

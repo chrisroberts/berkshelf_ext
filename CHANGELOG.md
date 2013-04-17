@@ -1,3 +1,6 @@
+## v1.0.12
+* Add proper support for metadata with missing name
+
 ## v1.0.10
 * Forcibly set name when uploading via knife
 * Only load sources of specified cookbooks when uploading with `--skip-dependencies`

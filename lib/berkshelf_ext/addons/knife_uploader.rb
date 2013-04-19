@@ -50,14 +50,19 @@ class RidleyMocker
 
   def chef_config!
     cwd = Dir.pwd.split('/')
-    until(cwd.empty?)
+    found = false
+    until(found || cwd.empty?)
       knife_conf = File.join(cwd.join('/'), '.chef/knife.rb')
-      if(File.exists?(knife_conf))
+      if(found = File.exists?(knife_conf))
         Chef::Config.from_file(knife_conf)
-        return
       end
     end
-    raise 'Failed to locate knife.rb file to configure chef!'
+    %w(chef_server_url validation_client_name validation_key client_key node_name).each do |k|
+      key = k.to_sym
+      if(value = Berkshelf::Config.instance[:chef][key])
+        Chef::Config[key] = value
+      end
+    end
   end
       
 end

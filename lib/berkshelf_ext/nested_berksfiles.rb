@@ -13,6 +13,12 @@ module BerkshelfExt
               :desc => 'Restrict nesting to this depth. Defaults to "0" (no restriction)'
             )
           )
+          %w{upload install}.each do |cmd|
+            klass.tasks[cmd].options[:nested_berksfiles] = Thor::Option.new(
+              'nested_berksfiles', :type => :boolean, :default => false,
+              :desc => 'Use Berksfiles found within cookbooks specifed in Berksfile'
+            )
+          end
         end
       end
     end
@@ -23,10 +29,13 @@ module BerkshelfExt
           klass.class_eval do
             alias_method :non_nested_berksfiles_resolver, :resolver
             alias_method :resolver, :nested_berksfiles_resolver
+
+            alias_method :non_nested_berksfile_install, :install
+            alias_method :install, :nested_berksfile_install
           end
         end
       end
-      
+
       def nested_berksfiles_resolver(options={})
         Berkshelf::Resolver.new(
           self.downloader,
@@ -35,6 +44,19 @@ module BerkshelfExt
           nested_berksfiles: options[:nested_berksfiles],
           nested_depth: options[:nested_depth]
         )
+      end
+
+      def nested_berksfile_install(options = {})
+        resolver = nested_berksfiles_resolver(options)
+
+        @cached_cookbooks = resolver.resolve
+        write_lockfile(resolver.sources) unless lockfile_present?
+
+        if options[:path]
+          self.class.vendor(@cached_cookbooks, options[:path])
+        end
+
+        self.cached_cookbooks
       end
     end
 
@@ -48,7 +70,7 @@ module BerkshelfExt
           end
         end
       end
-      
+
       def nested_berksfiles_initialize(downloader, options={})
         @nested_depth_limit = options[:nested_depth].to_i
         skip_deps = options[:skip_dependencies]

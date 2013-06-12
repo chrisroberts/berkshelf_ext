@@ -22,7 +22,7 @@ module BerkshelfExt
             Dir.chdir(File.dirname(path))
             instance_eval(content, File.expand_path(path), 1)
           rescue => e
-            raise BerksfileReadError.new(e), "An error occurred while reading the Berksfile: #{e.to_s}"
+            raise ::Berkshelf::BerksfileReadError.new(e), "An error occurred while reading the Berksfile: #{e.to_s}"
           ensure
             Dir.chdir(initial_path)
           end

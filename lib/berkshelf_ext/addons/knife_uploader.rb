@@ -44,6 +44,7 @@ class RidleyMocker
     cv.manifest['name'] = "#{cv.metadata.name}-#{cv.version}"
     cv.name = cv.manifest['cookbook_name'] = cv.metadata.name
     cv.freeze_version if upload_options.delete(:freeze)
+    puts "  -> Knife upload to: #{Chef::Config[:chef_server_url]}"
     Chef::CookbookUploader.new([cv], cookbook.path, upload_options).upload_cookbooks
     @ckbk = cv
   end
@@ -54,8 +55,12 @@ class RidleyMocker
     until(found || cwd.empty?)
       knife_conf = File.join(cwd.join('/'), '.chef/knife.rb')
       if(found = File.exists?(knife_conf))
-        Chef::Config.from_file(knife_conf)
+        begin
+          Chef::Config.from_file(knife_conf)
+        rescue
+        end
       end
+      cwd.pop
     end
     %w(chef_server_url validation_client_name validation_key client_key node_name).each do |k|
       key = k.to_sym

@@ -84,13 +84,23 @@ module BerkshelfExt
         # solution and not the dependency that caused the failure, run
         # each dependency through the graph individually so we can
         # provide a useful error string
-        demands.each do |demand|
+        demands.reverse.each do |demand|
           begin
             solution = Solve.it!(graph, [demand])
           rescue Solve::Errors::NoSolutionError
-             raise Berkshelf::NoSolution.new(
-              "Failed to resolve dependencies for:\n#{demand.join(': ')}\nDependencies: " <<
-              @sources[demand.first].cached_cookbook.dependencies.map{|n,v| "  #{n}: #{v}"}.join("\n")
+            deps = @sources[demand.first].cached_cookbook.dependencies.map{|n,v| "#{n.strip}-#{v.sub(%r{^[^0-9]+}, '').strip}"}
+            cur = @sources.values.map(&:cached_cookbook).map{|c| "#{c.metadata.name}-#{c.metadata.version}"}
+            failed_on = Array(deps - cur)
+            # TODO: if failed on is empty, resort and solve to attempt
+            # to locate root cause
+            raise Berkshelf::NoSolution.new(
+              "\n\nFailed to resolve dependencies for:\n#{demand.join(': ')}\n" <<
+              "Probable failure on: #{failed_on.empty? ? 'UNKNOWN!?' : failed_on.join(', ')}\n" << 
+              "Dependencies:\n" <<
+              @sources[demand.first].cached_cookbook.dependencies.map{|n,v| "  #{n}: #{v}"}.sort.join("\n") <<
+              "\nCurrently loaded:\n" <<
+              @sources.values.map(&:cached_cookbook).map{|c| "  #{c.name}: #{c.metadata.name} - #{c.metadata.version}"}.sort.join("\n") <<
+              "\n"
             )
           end
         end

@@ -68,5 +68,9 @@ all the addons, just set the everything env variable:
 3. https://github.com/RiotGames/berkshelf/pull/302
 4. https://github.com/RiotGames/berkshelf/pull/291 
 
+# Contributors
+
+* [Vasily Mikhaylichenko](https://github.com/vaskas)
+
 # Info
 * Repository: https://github.com/chrisroberts/berkshelf_ext

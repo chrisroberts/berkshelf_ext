@@ -1,3 +1,6 @@
+## v1.0.16
+* Add nesting support to `install` command (#2)
+
 ## v1.0.14
 * Use chef configurations from berks config if unset by knife
 * Fix exception namespacing

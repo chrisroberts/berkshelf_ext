@@ -1,3 +1,11 @@
+## v1.0.14
+* Use chef configurations from berks config if unset by knife
+* Fix exception namespacing
+* Provide path information when Berksfile processing fails
+* Allow limiting depth of nested berksfiles `--nested-depth n`
+* Attempt to properly identify cookbook causing solution failure
+  * Provide better output for solution failures
+
 ## v1.0.12
 * Add proper support for metadata with missing name
 

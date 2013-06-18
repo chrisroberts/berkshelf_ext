@@ -2,6 +2,6 @@ module BerkshelfExt
   class Version < Gem::Version
   end
 
-  VERSION = Version.new('1.0.14')
+  VERSION = Version.new('1.0.15')
   BERKSHELF_CONSTRAINT = '~> 1.3.1'
 end

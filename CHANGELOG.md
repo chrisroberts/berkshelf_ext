@@ -1,3 +1,6 @@
+## v1.0.18
+* Include full source loading all the time (missed when extracting from the 302 PR)
+
 ## v1.0.16
 * Add nesting support to `install` command (#2)
 

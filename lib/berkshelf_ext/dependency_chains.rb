@@ -11,21 +11,16 @@ module BerkshelfExt
           end
         end
       end
+
       def dependency_chains_sources(options = {})
         l_sources = @sources.collect { |name, source| source }.flatten
 
-        cookbooks  = options[:skip_dependencies] ? Array(options.fetch(:cookbooks, nil)) : []
-        except    = Array(options.fetch(:except, nil)).collect(&:to_sym)
-        only      = Array(options.fetch(:only, nil)).collect(&:to_sym)
+        except = Array(options.fetch(:except, nil)).collect(&:to_sym)
+        only = Array(options.fetch(:only, nil)).collect(&:to_sym)
 
         case
         when !except.empty? && !only.empty?
           raise Berkshelf::ArgumentError, "Cannot specify both :except and :only"
-        when !cookbooks.empty?
-          if !except.empty? && !only.empty?
-            Berkshelf.ui.warn "Cookbooks were specified, ignoring :except and :only"
-          end
-          l_sources.select { |source| options[:cookbooks].include?(source.name) }
         when !except.empty?
           l_sources.select { |source| (except & source.groups).empty? }
         when !only.empty?
@@ -34,7 +29,7 @@ module BerkshelfExt
           l_sources
         end
       end
-
+ 
       def dependency_chains_resolve(options={})
         resolver(options).resolve(options.fetch(:cookbooks, nil))
       end

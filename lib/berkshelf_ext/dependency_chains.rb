@@ -25,6 +25,8 @@ module BerkshelfExt
           l_sources.select { |source| (except & source.groups).empty? }
         when !only.empty?
           l_sources.select { |source| !(only & source.groups).empty? }
+        when options[:skip_dependencies]
+          l_sources.select { |source| options[:cookbooks].include?(source.name) }
         else
           l_sources
         end

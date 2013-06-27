@@ -3,20 +3,14 @@ module BerkshelfExt
     module Cli
       class << self
         def included(klass)
-          klass.tasks['upload'].options.update(
-            :nested_berksfiles => Thor::Option.new(
-              'nested_berksfiles', :type => :boolean, :default => false,
-              :desc => 'Use Berksfiles found within cookbooks specifed in Berksfile'
-            ),
-            :nested_depth => Thor::Option.new(
-              'nested_depth', :type => :numeric, :default => 0,
-              :desc => 'Restrict nesting to this depth. Defaults to "0" (no restriction)'
-            )
-          )
           %w{upload install}.each do |cmd|
             klass.tasks[cmd].options[:nested_berksfiles] = Thor::Option.new(
               'nested_berksfiles', :type => :boolean, :default => false,
               :desc => 'Use Berksfiles found within cookbooks specifed in Berksfile'
+            )
+            klass.tasks[cmd].options[:nested_depth] = Thor::Option.new(
+              'nested_depth', :type => :numeric, :default => 0,
+              :desc => 'Restrict nesting to this depth. Defaults to "0" (no restriction)'
             )
           end
         end

@@ -1,3 +1,6 @@
+## v1.0.20
+* Include `--nested-depth` option on `install` command
+
 ## v1.0.18
 * Include full source loading all the time (missed when extracting from the 302 PR)
 
